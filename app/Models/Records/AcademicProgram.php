@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Records;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +9,7 @@ class AcademicProgram extends Model
     protected $fillable = [
         'name',
         'abbreviation',
-        'isArchived',
+        'is_active',
         'description',
     ];
 }

@@ -2,23 +2,28 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Attributes\Description;
-use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 
-#[Signature('make:enum {name : The name of the enum} {--backed= : Type of backed enum (int|string)}')]
-#[Description('Creates a new enum class')]
 class MakeEnum extends Command
 {
-    /**
-     * Execute the console command.
-     */
+    protected $signature = 'make:enum {name : The name of the enum}
+                            {--s|string : Create a string-backed enum}
+                            {--i|int : Create an integer-backed enum}';
+    protected $description = 'Creates a new enum class';
+
     public function handle()
     {
         $name = $this->argument('name');
-        $backed = $this->option('backed');
 
-        // Build the full class path
+        // Determine the backed type based on the flags
+        if ($this->option('string')) {
+            $backed = 'string';
+        } elseif ($this->option('int')) {
+            $backed = 'int';
+        } else {
+            $backed = null;
+        }
+
         $className = basename(str_replace('\\', '/', $name));
         $namespace = 'App\\Enums';
         $subDir = dirname(str_replace('\\', '/', $name));
@@ -29,22 +34,17 @@ class MakeEnum extends Command
         $path = app_path("Enums/{$subDir}/{$className}.php");
         $path = str_replace('\\', '/', $path);
 
-        // Ensure directory exists
         if (! is_dir(dirname($path))) {
             mkdir(dirname($path), 0755, true);
         }
 
-        // Prepare stub content
         $stub = $this->getStub($backed);
-
-        // Replace placeholders
         $content = str_replace(
             ['{{ namespace }}', '{{ class }}'],
             [$namespace, $className],
             $stub
         );
 
-        // Write file
         if (file_exists($path)) {
             $this->error("Enum {$name} already exists!");
             return 1;
@@ -58,39 +58,50 @@ class MakeEnum extends Command
     {
         if ($backed === 'int') {
             return <<<STUB
-                <?php
+<?php
 
-                namespace {{ namespace }};
+namespace {{ namespace }};
 
-                enum {{ class }}: int
-                {
-                    //
-                }
-            STUB;
-            }
+enum {{ class }}: int
+{
+    // Add your cases here
 
-            if ($backed === 'string') {
-                return <<<STUB
-                    <?php
-
-                    namespace {{ namespace }};
-
-                    enum {{ class }}: string
-                    {
-                        //
-                    }
-                STUB;
-            }
-
-    return <<<STUB
-        <?php
-
-        namespace {{ namespace }};
-
-        enum {{ class }}
-        {
-            //
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+}
+STUB;
         }
-    STUB;
+
+        if ($backed === 'string') {
+            return <<<STUB
+<?php
+
+namespace {{ namespace }};
+
+enum {{ class }}: string
+{
+    // Add your cases here
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+}
+STUB;
+        }
+
+        // Pure enum (no backing)
+        return <<<STUB
+<?php
+
+namespace {{ namespace }};
+
+enum {{ class }}
+{
+    //
+}
+STUB;
     }
 }

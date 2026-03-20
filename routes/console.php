@@ -9,5 +9,4 @@ Artisan::command('inspire', function () {
 
 Artisan::command('make:enum {name}', function ($name) {
     $this->info("Creating enum: {$name}");
-    // Your generation logic here
 })->purpose('Create a new enum class');
