@@ -11,8 +11,9 @@ class MakeScaffold extends Command
     protected $signature = 'make:scaffold {name : The name of the model (e.g., User, Admin/User)}
                                           {--r|resource : Generate a resource controller}
                                           {--s|seed : Generate a seeder}
+                                          {--no-migration : Do not create a migration file}
                                           {--force : Overwrite existing files}';
-    protected $description = 'Create a model, controller, and seeder with a structured layout';
+    protected $description = 'Create a model, controller, migration, and optionally a seeder';
 
     protected Filesystem $files;
 
@@ -27,6 +28,7 @@ class MakeScaffold extends Command
         $name = $this->argument('name');
         $resource = $this->option('resource');
         $seed = $this->option('seed');
+        $noMigration = $this->option('no-migration');
         $force = $this->option('force');
 
         // Parse the model name
@@ -49,10 +51,16 @@ class MakeScaffold extends Command
         $seederClass = $baseName . 'Seeder';
         $seederPath = database_path('seeders/' . $seederClass . '.php');
 
+        // Migration path
+        $tableName = Str::plural(Str::snake($baseName));
+        $migrationFileName = date('Y_m_d_His') . '_create_' . $tableName . '_table.php';
+        $migrationPath = database_path('migrations/' . $migrationFileName);
+
         // Ensure directories exist
         $this->makeDirectory(dirname($modelPath));
         $this->makeDirectory(dirname($controllerPath));
         $this->makeDirectory(dirname($seederPath));
+        $this->makeDirectory(dirname($migrationPath));
 
         // Generate model
         if ($this->createFile($modelPath, $this->getModelStub($modelNamespace, $baseName), $force)) {
@@ -68,6 +76,15 @@ class MakeScaffold extends Command
         } else {
             $this->error("Controller already exists: {$controllerPath}");
             return 1;
+        }
+
+        // Generate migration (if not disabled)
+        if (!$noMigration) {
+            // Migration doesn't need existence check because timestamps are unique
+            $this->createFile($migrationPath, $this->getMigrationStub($tableName, $baseName), true);
+            $this->info("Migration created: {$migrationPath}");
+        } else {
+            $this->info("Skipped migration creation.");
         }
 
         // Generate seeder (if requested)
@@ -126,12 +143,15 @@ STUB;
         $modelClass = $class;
         $modelVariable = Str::camel($class);
 
+        $baseControllerImport = "use App\\Http\\Controllers\\Controller;";
+
         if ($resource) {
             return <<<STUB
 <?php
 
 namespace {$namespace};
 
+{$baseControllerImport}
 use {$modelNamespace}\\{$modelClass};
 use Illuminate\Http\Request;
 
@@ -198,6 +218,7 @@ STUB;
 
 namespace {$namespace};
 
+{$baseControllerImport}
 use {$modelNamespace}\\{$modelClass};
 use Illuminate\Http\Request;
 
@@ -244,6 +265,40 @@ class {$class}Controller extends Controller
 STUB;
     }
 
+    protected function getMigrationStub(string $tableName, string $modelClass): string
+    {
+        return <<<STUB
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('{$tableName}', function (Blueprint \$table) {
+            \$table->id();
+            \$table->timestamps();
+            // Add your columns here
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('{$tableName}');
+    }
+};
+STUB;
+    }
+
     protected function getSeederStub(string $class): string
     {
         return <<<STUB
@@ -267,25 +322,23 @@ STUB;
     }
 }
 
+
 /*
  *
- * # Create User model + simple controller (no resource, no seed)
+ *
+ *
+# Create a User model, controller, migration, and optionally seeder
 php artisan make:scaffold User
+add -s for seeder
 
-# Create with resource controller only
-php artisan make:scaffold User -r
-
-# Create with seeder only
-php artisan make:scaffold User -s
-
-# Create with resource controller and seeder (short options combined)
+# With resource controller and seeder (short options combined)
 php artisan make:scaffold User -rs
 
-# With nested path (Users/User) and both flags
-php artisan make:scaffold Users/User -rs
+# Skip migration creation
+php artisan make:scaffold User --no-migration
 
-# Force overwrite
-php artisan make:scaffold User -rs --force
+# Force overwrite existing files
+php artisan make:scaffold User --force
+
  *
- *
- * */
+ */
