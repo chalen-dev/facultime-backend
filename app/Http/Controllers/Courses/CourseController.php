@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Courses;
 
+use App\Http\Controllers\Controller;
+use App\Models\Courses\Course;
 use Illuminate\Http\Request;
 
-class AcademicProgramController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,7 +35,7 @@ class AcademicProgramController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Course $course)
     {
         //
     }
@@ -41,7 +43,7 @@ class AcademicProgramController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Course $course)
     {
         //
     }
@@ -49,7 +51,7 @@ class AcademicProgramController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Course $course)
     {
         //
     }
@@ -57,7 +59,7 @@ class AcademicProgramController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Course $course)
     {
         //
     }

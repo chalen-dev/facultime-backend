@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\MakeEnum;
+use App\Console\Commands\MakeScaffold;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands([
         __DIR__.'/../app/Console/Commands',
         MakeEnum::class,
+        MakeScaffold::class,
     ])
     ->withExceptions(function (Exceptions $exceptions): void {
         //

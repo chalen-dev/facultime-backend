@@ -4,6 +4,8 @@ namespace App\Models\Catalogs;
 
 use App\Enums\Visibility;
 use App\Enums\Privilege;
+use App\Models\Courses\Course;
+use App\Models\Catalogs\UserCatalog;
 use Illuminate\Database\Eloquent\Model;
 
 class Catalog extends Model
@@ -23,5 +25,10 @@ class Catalog extends Model
     public function userCatalogs()
     {
         return $this->hasMany(UserCatalog::class);
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 }

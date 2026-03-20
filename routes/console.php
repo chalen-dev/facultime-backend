@@ -10,3 +10,7 @@ Artisan::command('inspire', function () {
 Artisan::command('make:enum {name}', function ($name) {
     $this->info("Creating enum: {$name}");
 })->purpose('Create a new enum class');
+
+Artisan::command('make:scaffold {name}', function ($name) {
+    $this->info("Creating scaffold: {$name}");
+})->purpose('Create a new scaffold');

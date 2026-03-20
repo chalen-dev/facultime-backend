@@ -3,7 +3,7 @@
 namespace App\Models\User;
 
 use App\Enums\UserPosition;
-use App\Models\Records\AcademicProgram;
+use App\Models\AcademicPrograms\AcademicProgram;
 use Illuminate\Database\Eloquent\Model;
 
 class UserDetail extends Model
