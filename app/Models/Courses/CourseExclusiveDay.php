@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourseExclusiveDay extends Model
 {
+    protected $table = 'course_exclusive_days';
+
     protected $fillable = [
         // Add your fillable attributes here
         'course_id',
