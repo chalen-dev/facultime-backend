@@ -89,4 +89,9 @@ class Course extends Model
         );
     }
 
+    public function courseExclusiveDays()
+    {
+        return $this->hasMany(CourseExclusiveDay::class);
+    }
+
 }
