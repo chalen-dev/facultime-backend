@@ -32,4 +32,14 @@ class Workspace extends Model
             'visibility' => Visibility::class,
         ];
     }
+
+    public function automationSettings()
+    {
+        return $this->hasOne(AutomationSettings::class);
+    }
+
+    public function userWorkspaces()
+    {
+        return $this->hasMany(UserWorkspace::class);
+    }
 }

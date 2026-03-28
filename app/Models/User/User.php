@@ -6,6 +6,7 @@ namespace App\Models\User;
 use App\Enums\UserRole;
 use App\Models\Catalogs\UserCatalog;
 use App\Models\User\UserDetail;
+use App\Models\Workspaces\UserWorkspace;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -45,5 +46,10 @@ class User extends Authenticatable
     public function userCatalogs()
     {
         return $this->hasMany(UserCatalog::class);
+    }
+
+    public function userWorkspaces()
+    {
+        return $this->hasMany(UserWorkspace::class);
     }
 }
