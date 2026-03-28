@@ -131,9 +131,12 @@ class {$class} extends Model
         // Add your fillable attributes here
     ];
 
-    protected \$casts = [
-        // Add your casts here
-    ];
+    protected function casts(): array
+    {
+        return [
+            // Add your casts here
+        ];
+    }
 }
 STUB;
     }
