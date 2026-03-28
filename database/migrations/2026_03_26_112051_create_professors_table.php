@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('professor_type_id')->constrained('professor_types')->restrictOnDelete();
             $table->foreignId('professor_position_id')->constrained('professor_positions')->restrictOnDelete();
             $table->boolean('is_active')->default(true);
-            $table->integer('max_unit_load');
+            $table->decimal('max_unit_load', 10, 1);
             $table->string('first_name');
             $table->string('last_name');
             $table->string('middle_name')->nullable();

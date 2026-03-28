@@ -28,7 +28,7 @@ class Course extends Model
     protected function casts(){
         return [
             'academic_period_duration' => AcademicPeriodDuration::class,
-            'professor_unit_load' => 'integer',
+            'professor_unit_load' => 'decimal:1',
             'total_days_per_academic_term' => 'integer',
             'class_duration' => 'time',
         ];
@@ -76,6 +76,16 @@ class Course extends Model
             'courses_exclusive_to_rooms',
             'course_id',
             'room_id'
+        );
+    }
+
+    public function classTypes()
+    {
+        return $this->belongsToMany(
+            ClassType::class,
+            'courses_class_types',
+            'course_id',
+            'class_type_id'
         );
     }
 

@@ -30,7 +30,7 @@ class Professor extends Model
 
     protected $casts = [
         // Add your casts here
-        'max_unit_load' => 'integer',
+        'max_unit_load' => 'decimal:1',
         'is_active' => 'boolean',
         'age' => 'integer',
         'gender' => Genders::class,

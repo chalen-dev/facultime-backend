@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->string('name')->unique();
             $table->enum('academic_period_duration', AcademicPeriodDuration::values());
-            $table->decimal('professor_unit_load', 10, 2);
+            $table->decimal('professor_unit_load', 10, 1);
+            $table->integer('total_days_per_academic_term');
+            $table->time('class_duration');
             $table->text('description')->nullable();
             $table->timestamps();
         });

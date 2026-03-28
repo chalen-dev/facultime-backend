@@ -31,5 +31,13 @@ class ClassType extends Model
         );
     }
 
-
+    public function courses()
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'courses_class_types',
+            'class_type_id',
+            'course_id'
+        );
+    }
 }
