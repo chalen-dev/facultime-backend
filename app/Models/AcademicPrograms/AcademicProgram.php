@@ -21,7 +21,7 @@ class AcademicProgram extends Model
     protected function casts(): array
     {
         return [
-
+            'is_active' => 'boolean',
         ];
     }
 
@@ -32,12 +32,22 @@ class AcademicProgram extends Model
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class);
+        return $this->belongsToMany(
+            Course::class,
+            'courses_academic_programs',
+            'academic_program_id',
+            'course_id'
+        );
     }
 
     public function professors()
     {
-        return $this->belongsToMany(Professor::class);
+        return $this->belongsToMany(
+            Professor::class,
+            'professor_academic_programs',
+            'academic_program_id',
+            'professor_id'
+        );
     }
 
 

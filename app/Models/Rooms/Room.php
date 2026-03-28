@@ -4,6 +4,7 @@ namespace App\Models\Rooms;
 
 use App\Enums\RoomStatus;
 use App\Models\Catalogs\Catalog;
+use App\Models\Courses\Course;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
@@ -22,8 +23,19 @@ class Room extends Model
     ];
 
     protected $casts = [
+        'capacity' => 'integer',
         'status' => RoomStatus::class
     ];
+
+    public function courses()
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'courses_exclusive_to_rooms',
+            'room_id',
+            'course_id'
+        );
+    }
 
     public function catalog()
     {

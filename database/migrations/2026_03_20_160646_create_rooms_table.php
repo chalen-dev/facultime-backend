@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('catalog_id')->constrained('catalogs')->restrictOnDelete();
             $table->foreignId('room_floor_level_id')->constrained('room_floor_levels')->restrictOnDelete();
+            $table->foreignId('room_type_id')->constrained('room_types')->restrictOnDelete();
             $table->string('name');
             $table->integer('capacity');
             $table->text('description');

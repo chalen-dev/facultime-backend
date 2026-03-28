@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade');
             $table->foreignId('academic_program_id')->constrained('academic_programs')->onDelete('cascade');
-            $table->unique(['professor_id', 'academic_program_id']);
+            $table->unique(['professor_id', 'academic_program_id'], 'prof_program_unique');
             $table->timestamps();
         });
     }

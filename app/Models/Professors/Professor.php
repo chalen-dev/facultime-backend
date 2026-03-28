@@ -5,6 +5,7 @@ namespace App\Models\Professors;
 use App\Enums\Genders;
 use App\Models\AcademicPrograms\AcademicProgram;
 use App\Models\Catalogs\Catalog;
+use App\Models\Courses\Course;
 use Illuminate\Database\Eloquent\Model;
 
 class Professor extends Model
@@ -29,6 +30,7 @@ class Professor extends Model
 
     protected $casts = [
         // Add your casts here
+        'max_unit_load' => 'integer',
         'is_active' => 'boolean',
         'age' => 'integer',
         'gender' => Genders::class,
@@ -39,7 +41,22 @@ class Professor extends Model
     }
 
     public function academicPrograms(){
-        return $this->belongsToMany(AcademicProgram::class);
+        return $this->belongsToMany(
+            AcademicProgram::class,
+            'professors_academic_programs',
+            'professor_id',
+            'academic_program_id'
+        );
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'professor_specializations',
+            'course_id',
+            'professor_id'
+        );
     }
 
     public function professorEmails(){
