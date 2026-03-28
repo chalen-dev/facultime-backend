@@ -4,6 +4,7 @@ namespace App\Models\AcademicPrograms;
 
 use App\Models\Courses\Course;
 use App\Models\Professors\Professor;
+use App\Models\SessionGroups\SessionGroup;
 use App\Models\User\UserDetail;
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,6 +51,10 @@ class AcademicProgram extends Model
         );
     }
 
+    public function sessionGroups()
+    {
+        return $this->hasMany(SessionGroup::class);
+    }
 
 
 }

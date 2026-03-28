@@ -3,6 +3,7 @@
 namespace App\Models\Workspaces;
 
 use App\Enums\Visibility;
+use App\Models\SessionGroups\SessionGroup;
 use Illuminate\Database\Eloquent\Model;
 
 class Workspace extends Model
@@ -41,5 +42,10 @@ class Workspace extends Model
     public function userWorkspaces()
     {
         return $this->hasMany(UserWorkspace::class);
+    }
+
+    public function sessionGroups()
+    {
+        return $this->hasMany(SessionGroup::class);
     }
 }

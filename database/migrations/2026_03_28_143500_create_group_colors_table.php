@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('class_types_exclusive_to_room_types', function (Blueprint $table) {
+        Schema::create('group_colors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_type_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('room_type_id')->constrained()->cascadeOnDelete();
-            $table->unique(['class_type_id', 'room_type_id'], 'class_type_room_type_unique');
+            $table->string('name');
+            $table->string('hex_code');
+            $table->string('description')->nullable();
             $table->timestamps();
+            // Add your columns here
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('class_types_exclusive_to_room_types');
+        Schema::dropIfExists('group_colors');
     }
 };
