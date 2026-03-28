@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AcademicProgram extends Model
 {
+    protected $table = 'academic_programs';
+
     protected $fillable = [
         'name',
         'abbreviation',
@@ -23,14 +25,14 @@ class AcademicProgram extends Model
         ];
     }
 
-    public function courses()
-    {
-        return $this->belongsToMany(Course::class);
-    }
-
     public function userDetails()
     {
         return $this->hasMany(UserDetail::class);
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
     }
 
     public function professors()

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Professor extends Model
 {
+    protected $table = 'professors';
+
     protected $fillable = [
         // Add your fillable attributes here
         'catalog_id',

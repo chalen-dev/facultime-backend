@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProfessorEmail extends Model
 {
+    protected $table = 'professor_emails';
+
     protected $fillable = [
         // Add your fillable attributes here
         'professor_id',

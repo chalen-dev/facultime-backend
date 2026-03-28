@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Models\Professors;
+namespace App\Models\Courses;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProfessorContactNumber extends Model
+class ClassType extends Model
 {
-    protected $table = 'professor_contact_numbers';
+    protected $table = 'class_types';
 
     protected $fillable = [
         // Add your fillable attributes here
-        'professor_id',
-        'contact_number',
+        'name',
         'description'
     ];
 
@@ -22,7 +21,5 @@ class ProfessorContactNumber extends Model
         ];
     }
 
-    public function professor(){
-        return $this->belongsTo(Professor::class);
-    }
+
 }

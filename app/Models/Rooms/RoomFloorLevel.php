@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RoomFloorLevel extends Model
 {
+    protected $table = 'room_floor_levels';
     protected $fillable = [
         // Add your fillable attributes here
         'name',

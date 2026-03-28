@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
+    protected $table = 'rooms';
+
     protected $fillable = [
         // Add your fillable attributes here
         'catalog_id',

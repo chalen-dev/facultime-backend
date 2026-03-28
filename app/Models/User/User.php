@@ -25,6 +25,9 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    protected $table = 'users';
+
     protected function casts(): array
     {
         return [

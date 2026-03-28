@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProfessorType extends Model
 {
+    protected $table = 'professor_types';
+
     protected $fillable = [
         // Add your fillable attributes here
         'name',

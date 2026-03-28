@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Catalog extends Model
 {
+    protected $table = 'catalogs';
+
     protected $fillable = [
         'visibility',
         'public_visitor_privilege',
