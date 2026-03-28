@@ -3,6 +3,7 @@
 namespace App\Models\Courses;
 
 use App\Enums\AcademicPeriodDuration;
+use App\Models\AcademicPrograms\AcademicProgram;
 use App\Models\Catalogs\Catalog;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,5 +27,10 @@ class Course extends Model
     public function catalog()
     {
         return $this->belongsTo(Catalog::class);
+    }
+
+    public function academicPrograms()
+    {
+        return $this->belongsToMany(AcademicProgram::class);
     }
 }

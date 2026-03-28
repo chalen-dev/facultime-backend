@@ -3,6 +3,8 @@
 namespace App\Models\Professors;
 
 use App\Enums\Genders;
+use App\Models\AcademicPrograms\AcademicProgram;
+use App\Models\Catalogs\Catalog;
 use Illuminate\Database\Eloquent\Model;
 
 class Professor extends Model
@@ -30,10 +32,21 @@ class Professor extends Model
         'gender' => Genders::class,
     ];
 
+    public function catalogs(){
+        return $this->belongsTo(Catalog::class);
+    }
+
+    public function academicPrograms(){
+        return $this->belongsToMany(AcademicProgram::class);
+    }
+
     public function professorEmails(){
         return $this->hasMany(ProfessorEmail::class);
     }
 
+    public function professorContactNumbers(){
+        return $this->hasMany(ProfessorContactNumber::class);
+    }
 
     public function professorType(){
         return $this->belongsTo(ProfessorType::class);

@@ -2,6 +2,9 @@
 
 namespace App\Models\AcademicPrograms;
 
+use App\Models\Courses\Course;
+use App\Models\Professors\Professor;
+use App\Models\User\UserDetail;
 use Illuminate\Database\Eloquent\Model;
 
 class AcademicProgram extends Model
@@ -12,4 +15,29 @@ class AcademicProgram extends Model
         'is_active',
         'description',
     ];
+
+    protected function casts(): array
+    {
+        return [
+
+        ];
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function userDetails()
+    {
+        return $this->hasMany(UserDetail::class);
+    }
+
+    public function professors()
+    {
+        return $this->belongsToMany(Professor::class);
+    }
+
+
+
 }

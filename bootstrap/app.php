@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\MakeEnum;
+use App\Console\Commands\MakePivotMigration;
 use App\Console\Commands\MakeScaffold;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         __DIR__.'/../app/Console/Commands',
         MakeEnum::class,
         MakeScaffold::class,
+        MakePivotMigration::class,
     ])
     ->withExceptions(function (Exceptions $exceptions): void {
         //

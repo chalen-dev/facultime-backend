@@ -6,6 +6,7 @@ use App\Enums\Visibility;
 use App\Enums\Privilege;
 use App\Models\Courses\Course;
 use App\Models\Catalogs\UserCatalog;
+use App\Models\Professors\Professor;
 use Illuminate\Database\Eloquent\Model;
 
 class Catalog extends Model
@@ -30,5 +31,10 @@ class Catalog extends Model
     public function courses()
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function professors()
+    {
+        return $this->hasMany(Professor::class);
     }
 }

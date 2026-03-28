@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('professor_emails', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('professor_id')->constrained('professors')->restrictOnDelete();
+            $table->foreignId('professor_id')->constrained('professors')->cascadeOnDelete();
             $table->string('email');
             $table->enum('type', EmailTypes::values());
             $table->string('description')->nullable();
